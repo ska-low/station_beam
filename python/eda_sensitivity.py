@@ -320,7 +320,7 @@ def main():
             logger.error("Could not parse beamformer delays %s\n" % options.delays)
             sys.exit(1)
     else:
-        delays=options.delays
+        delays=list(options.delays)
         # delays=numpy.zeros(256)
 
     extension=options.extension
@@ -335,7 +335,7 @@ def main():
     gpsstring=options.gps
     gps=int(gpsstring)
                
-    if (len(delays)<16):
+    if (len(list(delays))<16):
         logger.error("Must supply 1 or 16 delays\n")
         sys.exit(1)
     if (frequency is None):

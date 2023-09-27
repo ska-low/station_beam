@@ -848,8 +848,8 @@ def get_fits_beam_multi( azim_rad, za_rad, frequency_mhz,
                         else :
                            print("WARNING : skipped pixel (x_int,y_int) = (%d,%d)" % (x_int,y_int))
    else :
-       x_pixel_int = int( round(x_pixel) )
-       y_pixel_int = int( round(y_pixel) )
+       x_pixel_int = int( numpy.round(x_pixel) )
+       y_pixel_int = int( numpy.round(y_pixel) )
 
        if power :
           beam_values[0,0] = current_fits_beam[0].data[x_pixel_int,y_pixel_int]

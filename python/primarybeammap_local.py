@@ -321,7 +321,7 @@ dec - dec in degrees"""
 def get_LST(gps):
     time=Time(gps,format='gps',scale='utc')
     time.delta_ut1_utc = 0.
-    LST=time.sidereal_time('apparent',MWA_POS.longitude.value)
+    LST=time.sidereal_time('apparent',MWA_POS.lon.value)
     return LST.value #keep as decimal hr
     
 

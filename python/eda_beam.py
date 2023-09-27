@@ -376,7 +376,7 @@ class ApertureArray:
         """
         Return the port currents on a tile given the freq (Hz) and delays (in units of the DQ)
         """
-        n_dipoles=numpy.size(delays)/2
+        n_dipoles=numpy.size(delays)//2
         lam = vel_light/freq
         phases = -2.0*numpy.pi*delays*(DQ/lam) # delays were calculated in seconds/DQ (steps of beamformer) it was specifically for the EDA1, now DQ could be set to 1 !
                                                # TODO : change DQ=1 in the future or remove !
@@ -869,14 +869,16 @@ def exportToFITS(j,freq,za,lst_hours,za_map=None,az_map=None,save_feko=False):
     try:
         os.remove(filename)
     except:
-        sys.exc_clear()
+        pass
+        #sys.exc_clear()
     pyfits.writeto(filename, numpy.abs(vis[:,:,0,0]))
     addWCStoFITS(filename,freq/1e6,lst_hours)
     filename = "EDA_beam_ZA_"+str(za)+"_"+str(freq/1e6)+"MHz_YY.fits"
     try:
         os.remove(filename)
     except:
-        sys.exc_clear()
+        pass
+        #sys.exc_clear()
     pyfits.writeto(filename, numpy.abs(vis[:,:,1,1]))
     addWCStoFITS(filename,freq/1e6,0.0)
     
@@ -934,7 +936,7 @@ def init_tiles( gain_sigma_dB=0.0, gain_sigma_ph_160mhz=0.00, doplots=False, fre
        for dipole in dipoles:
            newgain = numpy.power(10,gain_sigma_dB*numpy.random.randn(2)/10)
            phase = gain_sigma_ph * numpy.random.randn(1) * numpy.pi/180.0
-           phase_c = numpy.complex(numpy.cos(phase),numpy.sin(phase))
+           phase_c = complex(numpy.cos(phase),numpy.sin(phase))
            dipole.gain[0,0] *= newgain[0]*phase_c
            dipole.gain[1,1] *= newgain[1]*phase_c
        tile = ApertureArray( dipoles=dipoles, xpos=xpos, ypos=ypos, zpos=zpos )
@@ -1069,7 +1071,8 @@ def get_eda_beam( za, az, pointing_za_deg=0.00, pointing_az_deg=0.00, resolution
         try:
             os.remove(fname)
         except:
-            sys.exc_clear()
+            pass
+            #sys.exc_clear()
         pyfits.writeto(fname, area_scale_factor)
 
     vis = makeUnpolInstrumentalResponse(j,j)
